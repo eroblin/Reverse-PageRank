@@ -7,7 +7,7 @@ We used the graph extracted from the Stanford website. It is a page crawl of the
 There are two columns. The first column shows the indexes of the URLs of Stanford website's pages. The second column has all the indexes of the URLs that we can go to from the first column web pages. We directly use this dataset to  approximate the local PageRank algorithm (erasing the first few lines that are a description of the dataset). We call this dataset "web-Stanford-natural.txt". Furthermore, we build a reversed graph based on the first one : we simple invert the order of the two columns of the dataset. The resulting graph is called "web-Stanford-reverse.txt".   
 To account for the problem of nodes with out-degree zero, we prune the graph, that is we remove the leak nodes in the initial graph. Furthermore , we add a dampening factor alpha. We take the value commonly used, that is alpha = 0.85. 
 
-## Methodologie 
+## Methodology 
 
 We want to estimate the rank of the different webpages, define by the following equation: 
 
