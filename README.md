@@ -9,7 +9,7 @@ To account for the problem of nodes with out-degree zero, we prune the graph, th
 
 ## Methodologie 
 
-We want to estimate the rank of the different webpages : 
+We want to estimate the rank of the different webpages, define by the following equation: 
 
 ![alt tag](https://github.com/eroblin/Reverse-PageRank/blob/master/equation.png )
 
