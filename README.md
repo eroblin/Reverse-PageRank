@@ -7,7 +7,11 @@ We used the subgraph extracted from the stanford website. It is a page crawl of 
 To account for the problem of nodes with out-degree zero, we prune the graph, that is we remove the leak nodes in the initial graph. Furthermore , we add a dampening factor alpha. We take the value commonly used, that is alpha = 0.85. $\alpha$
 
 ## Methodologie 
-We 
+def weight(url,rank):
+    nb_url=len(url)
+    for url in nb_url:
+        yield (url,rank/nb_url)
+dbg
 ## Results
 
 
