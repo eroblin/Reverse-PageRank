@@ -15,18 +15,11 @@ from operator import add
 import numpy as np
 import re
 import sys
+################# Description of the data#####################################################
 
-#Description of the data
 
-#Definition of the useful functions
-def weight(url,rank):
-    nb_url=len(url)
-    for url in nb_url:
-        yield (url,rank/nb_url)
- 
-def sep(url):
-    separate = re.split(r'\t', url)
-    return separate[0], separate[1]
+
+############# Functions ###############################################################
 
 #Definition of the main function
 def pageRank(links,iterations,epsilon,alpha):
@@ -50,7 +43,16 @@ def pageRank(links,iterations,epsilon,alpha):
         
     output=(ranks_update, convergence_analyze, value)
     return output
-  
+#Definition of the useful functions
+def weight(url,rank):
+    nb_url=len(url)
+    for url in nb_url:
+        yield (url,rank/nb_url)
+ 
+def sep(url):
+    separate = re.split(r'\t', url)
+    return separate[0], separate[1]
+#################### Application ###################################################
 #Initialization of the parameters
 alpha=0.85
 epsilon=1e-3
@@ -68,4 +70,20 @@ data = sc.textFile(inputFile,1)
 links = data.map(lambda url: sep(url)).distinct().groupByKey().cache()
 ranks_update_r,convergence_analyze_r, value_r=pageRank(links,iterations,epsilon,alpha)
 
-#Description of the results
+######################Description of the results####################################
+#Top 10
+df5 = pd.DataFrame(valeur)
+df_sort_bis = df5.sort_values(by=1, ascending=False)
+print(df_sort_bis[:10])
+
+df6 = pd.DataFrame(valeur_r)
+df_sort = df6.sort_values(by=1, ascending=False)
+print(df_sort[:10])
+
+#Plot 
+plt.plot(p_converge_r, "#dd1c77",label= "RPR")
+plt.plot(p_converge, "#2b8cbe", label = "PR")
+plt.ylabel('Percentage of pageranks\' convergence')
+plt.xlabel('Number of Iterations')
+plt.legend()
+plt.show()
