@@ -22,6 +22,8 @@ We observe the evolution of the convergence of the two algorithms. We base our i
 
 ![alt tag](https://github.com/eroblin/Reverse-PageRank/blob/master/convergence.png)
 
+We also analyse the evolution of the number of ranks that are computed through time, which is a decreasing function accross iterations. 
 
+![alt tag](https://github.com/eroblin/Reverse-PageRank/blob/master/ranks.png)
 Then, we compare the top 10 rank of the two algorithms. There is only one value in common (the page  68889). We could run the two algorithms for more iterations. 
 Then, we join the two list of ranks according to the index. We compute the euclidian distance between the two columns. 
