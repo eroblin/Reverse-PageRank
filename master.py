@@ -63,11 +63,11 @@ iterations=10
 
 #Dataset for natural graph
 inputFile = "web-Stanford2.txt"
-ranks_update,convergence_analyze, value=pageRank(links,iterations,epsilon,alpha)
+ranks_update,convergence_analyze, value, stat=pageRank(links,iterations,epsilon,alpha)
 
 #Dataset for reverse graph
 inputFile = "web-Stanford3.txt"
-ranks_update_r,convergence_analyze_r, value_r=pageRank(links,iterations,epsilon,alpha)
+ranks_update_r,convergence_analyze_r, value_r, stat_r=pageRank(links,iterations,epsilon,alpha)
 
 ######################Description of the results####################################
 #Top 10
