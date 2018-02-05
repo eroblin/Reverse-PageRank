@@ -19,6 +19,9 @@ We implement the algorithm using the Map and Reduce framework. Spark uses Resili
 ## Results
 
 We observe the evolution of the convergence of the two algorithms. We base our idea of convergence on the formula of the article. We can anlalyse the evolution of the convergence through iterations. We see that the page rank on natural graph converges faster than the one of the reverse graph. This result is disapointing. 
+
 ![alt tag](https://github.com/eroblin/Reverse-PageRank/blob/master/convergence.png)
+
+
 Then, we compare the top 10 rank of the two algorithms. There is only one value in common (the page  68889). We could run the two algorithms for more iterations. 
 Then, we join the two list of ranks according to the index. We compute the euclidian distance between the two columns. 
