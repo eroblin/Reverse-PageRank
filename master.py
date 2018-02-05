@@ -82,7 +82,7 @@ print(df_sort[:10])
 df7 = pd.merge(df5, df6, on=0, how='outer')
 df7.isnull().sum()
 
-#Plot 
+#Plots 
 plt.plot(p_converge_r, "#dd1c77",label= "RPR")
 plt.plot(p_converge, "#2b8cbe", label = "PR")
 plt.ylabel('Percentage of convergence among pageranks')
@@ -90,4 +90,8 @@ plt.xlabel('Number of Iterations')
 plt.legend()
 plt.show()
 
-
+plt.plot(stat_r, "#dd1c77",label= "RPR")
+plt.plot(stat, "#2b8cbe", label = "PR")
+plt.ylabel('Number of ranks')
+plt.xlabel('Number of Iterations')
+plt.show()
