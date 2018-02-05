@@ -1,6 +1,6 @@
 
 PageRank is an algorithm that was first developed by Google Search to rank websites. It considers that the interest of a site is directly proportional to its popularity, where the popularity is seen as the number of links which point towards him. In the article "Local Methods for Estimating PageRank values" (2004), the authors Y. Chen, Q. Gan and Suel present a way to adapt the idea of PageRank to a local estimation, enabling the estimation of the rank of pages that are part of a subgraph of the web. Based on this method, Z. Bar-Yossef and L.-T. Mashiach show that we can improve the results obtained by local approximation using reverse web graphs instead of natural graphs. They underline the fact that the reverse pagerank method is particulary strong in the case of graphs that have a lot of in-degrees in comparision to out-degrees. *(The in-degree of a node is the number of hyperlinks pointing to it)*.   
-We will present briefly present the method of local approximation and show how we implemented it using MapReduce in the Python environment. 
+We will briefly present the method of local approximation and show how we implemented it using MapReduce in the Python environment. 
 
 ## The dataset : the Subgraph of Stanford Website  
 We used the graph extracted from the Stanford website. It is a page crawl of the www.stanford.edu domain performed in September 2002 by the WebBase project (http://snap.stanford.edu/data/web-Stanford.html). Nodes represent pages from Stanford University and directed edges represent hyperlinks between them.   
@@ -18,4 +18,7 @@ We implement the algorithm using the Map and Reduce framework. Spark uses Resili
 
 ## Results
 
-
+We observe the evolution of the convergence of the two algorithms. We base our idea of convergence on the formula of the article. We can anlalyse the evolution of the convergence through iterations. We see that the page rank on natural graph converges faster than the one of the reverse graph. This result is disapointing. 
+![alt tag](https://github.com/eroblin/Reverse-PageRank/blob/master/convergence.png)
+Then, we compare the top 10 rank of the two algorithms. There is only one value in common (the page  68889). We could run the two algorithms for more iterations. 
+Then, we join the two list of ranks according to the index. We compute the euclidian distance between the two columns. 
