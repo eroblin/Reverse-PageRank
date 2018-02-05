@@ -82,6 +82,11 @@ print(df_sort[:10])
 df7 = pd.merge(df5, df6, on=0, how='outer')
 df7.isnull().sum()
 
+df7 = df7.dropna(axis=0, how='any')
+from scipy.spatial.distance import pdist, squareform
+dist = pdist(df7[1], 'euclidean')
+df_dist = pd.DataFrame(squareform(dist))
+
 #Plots 
 plt.plot(p_converge_r, "#dd1c77",label= "RPR")
 plt.plot(p_converge, "#2b8cbe", label = "PR")
