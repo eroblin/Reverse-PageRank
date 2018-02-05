@@ -19,10 +19,42 @@ import sys
 #Description of the data
 
 #Definition of the useful functions
+def weight(url,rank):
+    nb_url=len(url)
+    for url in nb_url:
+        yield (url,rank/nb_url)
+ 
+def sep(url):
+    separate = re.split(r'\t', url)
+    return separate[0], separate[1]
 
 #Definition of the main function
-
+def pageRank(links,iterations,epsilon,alpha):
+    it=0
+    
+    nb_nodes=links.distinct().count()
+    
+    ranks = links.map(lambda nb_neighbors: (nb_neighbors[0], 1/nb_nodes))  
+    convergence_analyze=[]  
+    
+    while it<iterations :
+        
+        contributions = links.join(ranks).flatMap( lambda url_rank: weight(url_rank[1][0], url_rank[1][1]))  
+        ranks_update = contributions.reduceByKey(add).mapValues(lambda ranks: ranks * alpha + (1-alpha)/nb_nodes) 
+        diff = ranks.join(ranks_update).map(lambda score : abs(score[1][1]-score[1][0])/score[1][0])
+        list_diff_rank=diff.collect()       
+        convergence_analyze.append(sum(i<epsilon for i in list_diff_rank)/len(list_diff_rank))
+        ranks=ranks_update
+        value = ranks.collect()    
+        it+=1
+        
+    output=(ranks_update, convergence_analyze, value)
+    return output
+  
 #Initialization of the parameters
+alpha=0.85
+epsilon=1e-3
+iterations=20
 
 #Dataset for natural graph
 inputFile = "web-Stanford2.txt"
