@@ -80,6 +80,9 @@ df6 = pd.DataFrame(valeur_r)
 df_sort = df6.sort_values(by=1, ascending=False)
 print(df_sort[:10])
 
+df7 = pd.merge(df5, df6, on=0, how='outer')
+df7.isnull().sum()
+
 #Plot 
 plt.plot(p_converge_r, "#dd1c77",label= "RPR")
 plt.plot(p_converge, "#2b8cbe", label = "PR")
