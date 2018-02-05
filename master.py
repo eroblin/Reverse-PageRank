@@ -15,25 +15,28 @@ from operator import add
 import numpy as np
 import re
 import sys
-################# Description of the data#####################################################
-
 
 
 ############# Functions ###############################################################
 
 #Definition of the main function
 def pageRank(links,iterations,epsilon,alpha):
+    data = sc.textFile(inputFile,1)  
+    links = data.map(lambda url: sep(url)).distinct().groupByKey().cache()
     it=0
-    
+
     nb_nodes=links.distinct().count()
     
     ranks = links.map(lambda nb_neighbors: (nb_neighbors[0], 1/nb_nodes))  
     convergence_analyze=[]  
+    stat = []
     
-    while it<iterations :
+    for it in range(iterations) :
         
         contributions = links.join(ranks).flatMap( lambda url_rank: weight(url_rank[1][0], url_rank[1][1]))  
         ranks_update = contributions.reduceByKey(add).mapValues(lambda ranks: ranks * alpha + (1-alpha)/nb_nodes) 
+        stat1 = ranks_update.distinct().count()
+        stat.append(stat1)
         diff = ranks.join(ranks_update).map(lambda score : abs(score[1][1]-score[1][0])/score[1][0])
         list_diff_rank=diff.collect()       
         convergence_analyze.append(sum(i<epsilon for i in list_diff_rank)/len(list_diff_rank))
@@ -56,18 +59,14 @@ def sep(url):
 #Initialization of the parameters
 alpha=0.85
 epsilon=1e-3
-iterations=20
+iterations=10
 
 #Dataset for natural graph
 inputFile = "web-Stanford2.txt"
-data = sc.textFile(inputFile,1)  
-links = data.map(lambda url: sep(url)).distinct().groupByKey().cache()
 ranks_update,convergence_analyze, value=pageRank(links,iterations,epsilon,alpha)
 
 #Dataset for reverse graph
 inputFile = "web-Stanford3.txt"
-data = sc.textFile(inputFile,1)  
-links = data.map(lambda url: sep(url)).distinct().groupByKey().cache()
 ranks_update_r,convergence_analyze_r, value_r=pageRank(links,iterations,epsilon,alpha)
 
 ######################Description of the results####################################
@@ -86,7 +85,9 @@ df7.isnull().sum()
 #Plot 
 plt.plot(p_converge_r, "#dd1c77",label= "RPR")
 plt.plot(p_converge, "#2b8cbe", label = "PR")
-plt.ylabel('Percentage of pageranks\' convergence')
+plt.ylabel('Percentage of convergence among pageranks')
 plt.xlabel('Number of Iterations')
 plt.legend()
 plt.show()
+
+
